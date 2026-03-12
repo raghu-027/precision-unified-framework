@@ -5,115 +5,50 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- Parent Project Details -->
     <parent>
         <groupId>com.precision</groupId>
         <artifactId>precision-unified-framework</artifactId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
+
     <artifactId>ui-module</artifactId>
 
-
-    <name>Precision Unified Automation Framework</name>
-
-
-
-    <!-- Java Version -->
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-
-        <selenium.version>4.18.1</selenium.version>
-        <cucumber.version>7.15.0</cucumber.version>
-        <restassured.version>5.4.0</restassured.version>
-        <testng.version>7.10.2</testng.version>
-        <log4j.version>2.22.1</log4j.version>
-        <extent.version>5.1.1</extent.version>
     </properties>
 
-    <!-- Dependency Management (shared across modules) -->
-    <dependencyManagement>
-        <dependencies>
+    <!-- ACTUAL DEPENDENCIES -->
+    <dependencies>
 
-            <!-- Selenium -->
-            <dependency>
-                <groupId>org.seleniumhq.selenium</groupId>
-                <artifactId>selenium-java</artifactId>
-                <version>${selenium.version}</version>
-            </dependency>
+        <!-- Selenium -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>4.18.1</version>
+        </dependency>
 
-            <!-- Cucumber -->
-            <dependency>
-                <groupId>io.cucumber</groupId>
-                <artifactId>cucumber-java</artifactId>
-                <version>${cucumber.version}</version>
-            </dependency>
+        <!-- WebDriver Manager -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>5.7.0</version>
+        </dependency>
 
-            <dependency>
-                <groupId>io.cucumber</groupId>
-                <artifactId>cucumber-testng</artifactId>
-                <version>${cucumber.version}</version>
-            </dependency>
+        <!-- TestNG -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.10.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.precision</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
 
-            <!-- RestAssured -->
-            <dependency>
-                <groupId>io.rest-assured</groupId>
-                <artifactId>rest-assured</artifactId>
-                <version>${restassured.version}</version>
-            </dependency>
-
-            <!-- TestNG -->
-            <dependency>
-                <groupId>org.testng</groupId>
-                <artifactId>testng</artifactId>
-                <version>${testng.version}</version>
-            </dependency>
-
-            <!-- Log4j -->
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-api</artifactId>
-                <version>${log4j.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-core</artifactId>
-                <version>${log4j.version}</version>
-            </dependency>
-
-            <!-- Extent Reports -->
-            <dependency>
-                <groupId>com.aventstack</groupId>
-                <artifactId>extentreports</artifactId>
-                <version>${extent.version}</version>
-            </dependency>
-
-        </dependencies>
-    </dependencyManagement>
-
-    <!-- Build Plugins -->
-    <build>
-        <pluginManagement>
-            <plugins>
-
-                <!-- Maven Compiler -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.11.0</version>
-                </plugin>
-
-                <!-- Surefire Plugin (runs tests) -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.2.5</version>
-                </plugin>
-
-            </plugins>
-        </pluginManagement>
-    </build>
+    </dependencies>
 
 </project>
