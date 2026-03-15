@@ -9,7 +9,7 @@
     <groupId>com.precision</groupId>
     <artifactId>precision-unified-framework</artifactId>
     <version>1.0.0</version>
-    <packaging>pom</packaging>
+    <packaging>pom</packaging>     <!-- This makes it as a parent pom.xml (The maven understands that this a parent pom.xml and does look for the code to complie-->
 
     <name>Precision Unified Automation Framework</name>
 
@@ -23,8 +23,8 @@
 
     <!-- Java Version -->
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
 
         <selenium.version>4.18.1</selenium.version>
         <cucumber.version>7.15.0</cucumber.version>
@@ -90,6 +90,26 @@
                 <groupId>com.aventstack</groupId>
                 <artifactId>extentreports</artifactId>
                 <version>${extent.version}</version>
+            </dependency>
+
+            <!-- Jackson -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.17.0</version>
+            </dependency>
+
+            <!-- Apache Commons Utilities -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.14.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.15.1</version>
             </dependency>
 
         </dependencies>
