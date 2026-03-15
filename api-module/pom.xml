@@ -79,6 +79,7 @@
         <dependency>
             <groupId>com.precision</groupId>
             <artifactId>common</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
     </dependencies>
