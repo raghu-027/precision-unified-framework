@@ -112,6 +112,20 @@
                 <version>2.15.1</version>
             </dependency>
 
+            <!-- WebDriverManager -->
+            <dependency>
+                <groupId>io.github.bonigarcia</groupId>
+                <artifactId>webdrivermanager</artifactId>
+                <version>5.7.0</version>
+            </dependency>
+
+            <!-- JSON Path -->
+            <dependency>
+                <groupId>io.rest-assured</groupId>
+                <artifactId>json-path</artifactId>
+                <version>${restassured.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
