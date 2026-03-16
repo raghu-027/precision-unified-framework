@@ -1,46 +1,81 @@
 package com.precision.ui.pages;
 
-import com.precision.common.logger.LogManager;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import java.util.List;
 
 public class CartPage extends BasePage {
 
-    @FindBy(xpath = "//li[normalize-space()='Shopping Cart']")
-    private WebElement cartPageTitle;
+    @FindBy(xpath = "//h2[normalize-space()='Shopping Cart']")
+    private WebElement cartHeading;
 
-    @FindBy(xpath = "//tr[contains(@id,'product')]")
-    private WebElement cartProductRow;
+    @FindBy(css = "#cart_info_table tbody tr")
+    private List<WebElement> cartItems;
 
-    @FindBy(xpath = "//a[normalize-space()='Proceed To Checkout']")
-    private WebElement proceedToCheckoutButton;
+    @FindBy(css = "a[href='/checkout']")
+    private WebElement proceedToCheckoutBtn;
 
-    @FindBy(xpath = "//p[contains(text(),'Cart is empty')]")
+    @FindBy(css = ".cart_delete a")
+    private List<WebElement> deleteButtons;
+
+    @FindBy(xpath = "//p[@class='text-center']")
     private WebElement emptyCartMessage;
 
-    public CartPage(WebDriver driver) {
-        super(driver);
-        LogManager.info("CartPage initialized");
+    @FindBy(css = ".cart_price p")
+    private List<WebElement> itemPrices;
+
+    @FindBy(css = ".cart_quantity button")
+    private List<WebElement> itemQuantities;
+
+    public CartPage() {
+        super();
     }
 
-    public boolean isCartPageDisplayed() {
-        LogManager.info("Checking if cart page is displayed");
-        return isDisplayed(cartPageTitle);
+    public boolean isCartPageLoaded() {
+        boolean loaded = waitForVisibility(cartHeading).isDisplayed();
+        log.info("CartPage loaded: {}", loaded);
+        return loaded;
     }
 
-    public boolean isProductInCart() {
-        LogManager.info("Checking if product exists in cart");
-        return isDisplayed(cartProductRow);
+    public int getCartItemCount() {
+        int count = cartItems.size();
+        log.info("Cart item count: {}", count);
+        return count;
     }
 
     public boolean isCartEmpty() {
-        LogManager.info("Checking if cart is empty");
-        return isDisplayed(emptyCartMessage);
+        try {
+            boolean empty = waitForVisibility(emptyCartMessage).isDisplayed();
+            log.info("Cart is empty: {}", empty);
+            return empty;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
-    public void clickProceedToCheckout() {
-        LogManager.info("Clicking Proceed To Checkout");
-        click(proceedToCheckoutButton);
+    public void removeItemFromCart(int index) {
+        log.info("Removing cart item at index: {}", index);
+        click(deleteButtons.get(index));
+        waitForInvisibility(cartItems.get(index));
+    }
+
+    public void removeAllItems() {
+        log.info("Removing all items from cart");
+        while (!deleteButtons.isEmpty()) {
+            click(deleteButtons.get(0));
+        }
+    }
+
+    public String getItemPrice(int index) {
+        return getText(itemPrices.get(index));
+    }
+
+    public String getItemQuantity(int index) {
+        return getText(itemQuantities.get(index));
+    }
+
+    public void proceedToCheckout() {
+        log.info("Clicking Proceed To Checkout");
+        click(proceedToCheckoutBtn);
     }
 }

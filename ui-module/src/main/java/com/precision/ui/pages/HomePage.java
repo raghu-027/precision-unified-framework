@@ -1,51 +1,63 @@
 package com.precision.ui.pages;
 
-import com.precision.common.logger.LogManager;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class HomePage extends BasePage {
 
-    @FindBy(xpath = "//a[contains(text(),'Signup / Login')]")
-    private WebElement signupLoginLink;
+    @FindBy(id = "slider-carousel")
+    private WebElement homeCarousel;
 
-    @FindBy(xpath = "//a[contains(text(),'Cart')]")
-    private WebElement cartLink;
+    @FindBy(css = "a[href='/login']")
+    private WebElement signupLoginBtn;
 
-    @FindBy(xpath = "//a[contains(text(),' Logged in as ')]")
+    @FindBy(css = "a[href='/view_cart']")
+    private WebElement cartBtn;
+
+    @FindBy(css = "a[href='/logout']")
+    private WebElement logoutBtn;
+
+    @FindBy(xpath = "//a[normalize-space()='Logged in as']/b")
     private WebElement loggedInUsername;
 
-    @FindBy(xpath = "//a[contains(text(),'Logout')]")
-    private WebElement logoutLink;
-
-    public HomePage(WebDriver driver) {
-        super(driver);
-        LogManager.info("HomePage initialized");
+    // Constructor
+    public HomePage() {
+        super();
     }
 
-    public LoginPage navigateToLogin() {
-        LogManager.info("Clicking Signup/Login link");
-        click(signupLoginLink);
-        return new LoginPage(driver);
-    }
-
-    public CartPage navigateToCart() {
-        LogManager.info("Clicking Cart link");
-        click(cartLink);
-        return new CartPage(driver);
+    public boolean isHomePageLoaded() {
+        boolean loaded = waitForVisibility(homeCarousel).isDisplayed();
+        log.info("HomePage loaded: {}", loaded);
+        return loaded;
     }
 
     public boolean isUserLoggedIn() {
-        LogManager.info("Checking if user is logged in");
-        return isDisplayed(loggedInUsername);
+        try {
+            return loggedInUsername.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public String getLoggedInUsername() {
-        return getText(loggedInUsername);
+        log.info("Getting logged-in username");
+        return waitForVisibility(loggedInUsername).getText();
     }
 
-    public void clickLogout() {
-        click(logoutLink);
+    public LoginPage navigateToLoginPage() {
+        log.info("Clicking Signup/Login button");
+        waitForClickability(signupLoginBtn).click();
+        return new LoginPage();
+    }
+
+    public CartPage navigateToCartPage() {
+        log.info("Clicking Cart button");
+        waitForClickability(cartBtn).click();
+        return new CartPage();
+    }
+
+    public void logout() {
+        log.info("Clicking Logout button");
+        waitForClickability(logoutBtn).click();
     }
 }
