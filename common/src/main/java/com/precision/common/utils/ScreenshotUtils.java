@@ -2,7 +2,7 @@ package com.precision.common.utils;
 
 import com.precision.common.driver.DriverManager;
 import com.precision.common.logger.LogManager;
-import com.precision.common.reporting.ExtentTestManager;
+import com.precision.common.reports.ExtentTestManager;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.OutputType;
