@@ -1,4 +1,4 @@
-package com.precision.common.reporting;
+package com.precision.common.reports;
 
 import com.aventstack.extentreports.ExtentTest;
 import com.precision.common.logger.LogManager;

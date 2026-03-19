@@ -1,4 +1,4 @@
-package com.precision.common.reporting;
+package com.precision.common.reports;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
