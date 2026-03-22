@@ -6,7 +6,6 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- Parent Project -->
     <parent>
         <groupId>com.precision</groupId>
         <artifactId>precision-unified-framework</artifactId>
@@ -18,32 +17,30 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
     </properties>
 
     <dependencies>
 
-        <!-- Dependency on UI Module -->
         <dependency>
             <groupId>com.precision</groupId>
             <artifactId>ui-module</artifactId>
             <version>1.0.0</version>
         </dependency>
 
-        <!-- Dependency on API Module -->
         <dependency>
             <groupId>com.precision</groupId>
             <artifactId>api-module</artifactId>
             <version>1.0.0</version>
         </dependency>
 
-        <!-- Dependency on Common Module -->
         <dependency>
             <groupId>com.precision</groupId>
             <artifactId>common</artifactId>
             <version>1.0.0</version>
         </dependency>
 
-        <!-- Cucumber -->
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
@@ -54,13 +51,18 @@
             <artifactId>cucumber-testng</artifactId>
         </dependency>
 
-        <!-- TestNG -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-picocontainer</artifactId>
+            <version>7.15.0</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
         </dependency>
 
-        <!-- Logging -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
@@ -71,12 +73,25 @@
             <artifactId>log4j-core</artifactId>
         </dependency>
 
-        <!-- Reporting -->
         <dependency>
             <groupId>com.aventstack</groupId>
             <artifactId>extentreports</artifactId>
         </dependency>
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

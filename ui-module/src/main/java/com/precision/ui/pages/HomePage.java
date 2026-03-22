@@ -17,30 +17,26 @@ public class HomePage extends BasePage {
     @FindBy(css = "a[href='/logout']")
     private WebElement logoutBtn;
 
-    @FindBy(xpath = "//a[normalize-space()='Logged in as']/b")
+    @FindBy(xpath = "//a[contains(.,'Logged in as')]/b")
     private WebElement loggedInUsername;
 
-    // Constructor
     public HomePage() {
         super();
     }
 
     public boolean isHomePageLoaded() {
-        boolean loaded = waitForVisibility(homeCarousel).isDisplayed();
-        log.info("HomePage loaded: {}", loaded);
-        return loaded;
+        return waitForVisibility(homeCarousel).isDisplayed();
     }
 
     public boolean isUserLoggedIn() {
         try {
-            return loggedInUsername.isDisplayed();
+            return waitForVisibility(loggedInUsername).isDisplayed();
         } catch (Exception e) {
             return false;
         }
     }
 
     public String getLoggedInUsername() {
-        log.info("Getting logged-in username");
         return waitForVisibility(loggedInUsername).getText();
     }
 
@@ -56,8 +52,16 @@ public class HomePage extends BasePage {
         return new CartPage();
     }
 
+    public ProductPage navigateToProductsPage() {
+        log.info("Navigating to Products page");
+        navigateTo("/products");
+        waitForPageLoad();
+        dismissAdsIfPresent();
+        return new ProductPage();
+    }
+
     public void logout() {
-        log.info("Clicking Logout button");
+        log.info("Clicking Logout");
         waitForClickability(logoutBtn).click();
     }
 }

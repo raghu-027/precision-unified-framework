@@ -23,14 +23,14 @@
 
     <!-- Java Version -->
     <properties>
-        <maven.compiler.source>25</maven.compiler.source>
-        <maven.compiler.target>25</maven.compiler.target>
-
+        <java.version>21</java.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <selenium.version>4.18.1</selenium.version>
-        <cucumber.version>7.15.0</cucumber.version>
         <restassured.version>5.4.0</restassured.version>
-        <testng.version>7.10.2</testng.version>
-        <log4j.version>2.22.1</log4j.version>
+        <cucumber.version>7.15.0</cucumber.version>
+        <testng.version>7.9.0</testng.version>
+        <log4j.version>2.23.1</log4j.version>
         <extent.version>5.1.1</extent.version>
     </properties>
 
@@ -90,6 +90,19 @@
                 <groupId>com.aventstack</groupId>
                 <artifactId>extentreports</artifactId>
                 <version>${extent.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>io.cucumber</groupId>
+                <artifactId>cucumber-picocontainer</artifactId>
+                <version>7.15.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>5.2.3</version>
             </dependency>
 
             <!-- Jackson -->

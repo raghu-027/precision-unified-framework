@@ -12,9 +12,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
 
 public abstract class BasePage {
 
@@ -61,6 +64,15 @@ public abstract class BasePage {
         driver.navigate().back();
     }
 
+
+
+    protected void waitForPageLoad() {
+        new WebDriverWait(driver, Duration.ofSeconds(15))
+                .until(webDriver -> ((JavascriptExecutor) webDriver)
+                        .executeScript("return document.readyState")
+                        .equals("complete"));
+    }
+
     // ───────────────── Wait Utilities ─────────────────
 
     protected WebElement waitForVisibility(WebElement element) {
@@ -75,6 +87,14 @@ public abstract class BasePage {
         return WaitUtils.waitForInvisibility(element);
     }
 
+
+    protected void waitForUrlToChange(String currentUrlPart) {
+        log.info("Waiting for URL to change from: {}", currentUrlPart);
+        new WebDriverWait(driver, Duration.ofSeconds(15))
+                .until(ExpectedConditions.not(
+                        ExpectedConditions.urlContains(currentUrlPart)
+                ));
+    }
     // ───────────────── Element Actions ─────────────────
 
     protected void click(WebElement element) {
@@ -118,6 +138,27 @@ public abstract class BasePage {
             log.info("Screenshot saved: {}", dest.getAbsolutePath());
         } catch (IOException e) {
             log.error("Failed to save screenshot", e);
+        }
+    }
+    protected void dismissAdsIfPresent() {
+        try {
+            ((JavascriptExecutor) driver).executeScript(
+                    "var selectors = [" +
+                            "'iframe[id*=google]', 'iframe[id*=ad]', " +
+                            "'.adsbygoogle', '#ad_position_box', " +
+                            "'.advertisement', 'ins.adsbygoogle', " +
+                            "'div[id*=google_ads]', 'div[class*=adsbygoogle]'" +
+                            "];" +
+                            "selectors.forEach(function(sel) {" +
+                            "  document.querySelectorAll(sel).forEach(function(el) {" +
+                            "    el.style.display='none';" +
+                            "  });" +
+                            "});"
+            );
+            log.info("Ads hidden via JS");
+            Thread.sleep(300);
+        } catch (Exception e) {
+            log.warn("Ad dismissal skipped: {}", e.getMessage());
         }
     }
 }

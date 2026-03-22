@@ -4,10 +4,13 @@ import com.precision.common.driver.DriverManager;
 import com.precision.common.logger.LogManager;
 import com.precision.common.reports.ExtentReportManager;
 import com.precision.common.reports.ExtentTestManager;
-import com.precision.common.utils.ScreenshotUtils;
-import com.aventstack.extentreports.Status;
-import io.cucumber.java.*;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 
 public class Hooks {
 
@@ -15,54 +18,41 @@ public class Hooks {
 
     @Before
     public void setUp(Scenario scenario) {
-
         ExtentTestManager.createTest(scenario.getName());
-
-        log.info("Starting Scenario: " + scenario.getName());
+        log.info("Starting Scenario: {}", scenario.getName());
         ExtentTestManager.getTest()
-                .log(Status.INFO, "Starting Scenario: " + scenario.getName());
-
+                .info("Starting Scenario: " + scenario.getName());
         DriverManager.initDriver();
-
         log.info("Browser launched successfully");
         ExtentTestManager.getTest()
-                .log(Status.INFO, "Browser launched successfully");
+                .info("Browser launched successfully");
     }
 
     @After
     public void tearDown(Scenario scenario) {
-
         try {
             if (scenario.isFailed()) {
+                log.error("Scenario FAILED: {}", scenario.getName());
 
-                log.error("Scenario FAILED: " + scenario.getName());
-
-                String screenshotPath = ScreenshotUtils
-                        .captureScreenshot(scenario.getName());
-
-                ExtentTestManager.getTest()
-                        .fail("Scenario Failed: " + scenario.getName());
+                String base64 = ((TakesScreenshot) DriverManager.getDriver())
+                        .getScreenshotAs(OutputType.BASE64);
 
                 ExtentTestManager.getTest()
-                        .addScreenCaptureFromPath(screenshotPath, "Failure Screenshot");
-
-                log.error("Screenshot saved at: " + screenshotPath);
+                        .fail("Scenario Failed: " + scenario.getName(),
+                                MediaEntityBuilder
+                                        .createScreenCaptureFromBase64String(base64)
+                                        .build()
+                        );
 
             } else {
-
-                log.info("Scenario PASSED: " + scenario.getName());
-
+                log.info("Scenario PASSED: {}", scenario.getName());
                 ExtentTestManager.getTest()
                         .pass("Scenario Passed: " + scenario.getName());
             }
-
         } finally {
-
             DriverManager.quitDriver();
             log.info("Browser closed");
-
             ExtentTestManager.removeTest();
-
             ExtentReportManager.flushReports();
             log.info("Report updated");
         }

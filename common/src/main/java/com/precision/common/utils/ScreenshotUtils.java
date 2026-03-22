@@ -22,7 +22,8 @@ public class ScreenshotUtils {
     public static String captureScreenshot(String scenarioName) {
 
         String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String fileName = scenarioName.replaceAll(" ", "_") + "_" + timestamp + ".png";
+        String fileName = scenarioName.replaceAll("[^a-zA-Z0-9]", "_") + "_" + timestamp + ".png";
+
         String filePath = "target/screenshots/" + fileName;
 
         try {
@@ -36,7 +37,9 @@ public class ScreenshotUtils {
             FileUtils.copyFile(screenshot, new File(filePath));
             log.info("Screenshot saved: {}", filePath);
 
-            ExtentTestManager.attachScreenshot(filePath);
+            String base64 = ((TakesScreenshot) DriverManager.getDriver())
+                    .getScreenshotAs(OutputType.BASE64);
+            ExtentTestManager.attachScreenshotBase64(base64);
 
         } catch (IOException e) {
             log.error("Screenshot failed: {}", e.getMessage());
