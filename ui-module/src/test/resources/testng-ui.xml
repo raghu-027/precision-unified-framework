@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="UI Test Suite" parallel="false" verbose="2">
+
+    <test name="TC1 - Register New User">
+        <classes>
+            <class name="com.precision.ui.runners.RegisterTestRunner"/>
+        </classes>
+    </test>
+
+    <test name="TC2 and TC3 - Login Tests">
+        <classes>
+            <class name="com.precision.ui.runners.LoginTestRunner"/>
+        </classes>
+    </test>
+
+    <test name="TC4 and TC5 - Cart Tests">
+        <classes>
+            <class name="com.precision.ui.runners.CartTestRunner"/>
+        </classes>
+    </test>
+
+</suite>
