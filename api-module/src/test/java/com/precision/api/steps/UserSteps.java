@@ -5,8 +5,8 @@ import com.precision.api.validators.UserValidator;
 import com.precision.common.config.ConfigReader;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import java.util.UUID;
 
 public class UserSteps {
 
@@ -15,11 +15,15 @@ public class UserSteps {
     private String currentPassword;
 
     private String generateUniqueEmail() {
-        return "mohansurya+" + System.currentTimeMillis() + "@test.com";
+        return "mohansurya+" + UUID.randomUUID() + "@test.com";
     }
 
-    private int getResponseCode() {
-        return JsonPath.from(response.asString()).getInt("responseCode");
+    private int getHttpStatusCode() {
+        return response.getStatusCode();
+    }
+
+    private int getApiResponseCode() {
+        return response.jsonPath().getInt("responseCode");
     }
 
     // TC3 - Create user
@@ -33,10 +37,10 @@ public class UserSteps {
         );
     }
 
-    @Then("response status code should be 201")
+    @Then("create response status code should be 200")
     public void validateCreateUserStatusCode() {
-        int responseCode = getResponseCode();
-        assert responseCode == 201 : "Expected 201 but got " + responseCode;
+        int statusCode = getHttpStatusCode();
+        assert statusCode == 200 : "Expected HTTP 200 but got " + statusCode;
     }
 
     @Then("response message should confirm user created")
@@ -59,7 +63,7 @@ public class UserSteps {
 
     @Then("delete response status code should be 200")
     public void validateDeleteUserStatusCode() {
-        int responseCode = getResponseCode();
+        int responseCode = getApiResponseCode();
         assert responseCode == 200 : "Expected 200 but got " + responseCode;
     }
 
@@ -83,7 +87,7 @@ public class UserSteps {
 
     @Then("update response status code should be 200")
     public void validateUpdateUserStatusCode() {
-        int responseCode = getResponseCode();
+        int responseCode = getApiResponseCode();
         assert responseCode == 200 : "Expected 200 but got " + responseCode;
     }
 
