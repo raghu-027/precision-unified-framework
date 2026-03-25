@@ -1,11 +1,9 @@
 package com.precision.api.validators;
 
-import io.restassured.http.ContentType;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import static org.hamcrest.Matchers.equalTo;
 
 public class UserValidator {
 
@@ -13,27 +11,38 @@ public class UserValidator {
 
     private UserValidator() {}
 
+    private static JsonPath parseResponse(Response response) {
+        return JsonPath.from(response.asString());
+    }
+
     public static void validateUserCreated(Response response) {
         log.info("Validating user creation response");
-        response.then()
-                .contentType(ContentType.JSON)
-                .body("responseCode", equalTo(201))
-                .body("message", equalTo("User created!"));
+        JsonPath jsonPath = parseResponse(response);
+        int responseCode = jsonPath.getInt("responseCode");
+        String message = jsonPath.getString("message");
+
+        assert responseCode == 201 : "Expected 201 but got " + responseCode;
+        assert message.equals("User created!") : "Unexpected message: " + message;
     }
 
     public static void validateUserDeleted(Response response) {
         log.info("Validating user deletion response");
-        response.then()
-                .contentType(ContentType.JSON)
-                .body("responseCode", equalTo(200))
-                .body("message", equalTo("Account deleted!"));
+        JsonPath jsonPath = parseResponse(response);
+        int responseCode = jsonPath.getInt("responseCode");
+        String message = jsonPath.getString("message");
+
+        assert responseCode == 200 : "Expected 200 but got " + responseCode;
+        assert message.equals("Account deleted!") : "Unexpected message: " + message;
     }
 
     public static void validateUserUpdated(Response response) {
         log.info("Validating user update response");
-        response.then()
-                .contentType(ContentType.JSON)
-                .body("responseCode", equalTo(200))
-                .body("message", equalTo("User updated!"));
+        JsonPath jsonPath = parseResponse(response);
+        int responseCode = jsonPath.getInt("responseCode");
+        String message = jsonPath.getString("message");
+
+        assert responseCode == 200 : "Expected 200 but got " + responseCode;
+        assert message.equals("User updated!") : "Unexpected message: " + message;
     }
+
 }
