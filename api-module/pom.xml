@@ -75,6 +75,7 @@
             <artifactId>extentreports</artifactId>
         </dependency>
 
+
         <!-- Common Module -->
         <dependency>
             <groupId>com.precision</groupId>
@@ -96,4 +97,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
