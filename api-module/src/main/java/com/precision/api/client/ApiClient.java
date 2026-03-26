@@ -11,7 +11,11 @@ public class ApiClient {
 
     public static RequestSpecification getBaseSpec() {
         if (requestSpec == null) {
-            requestSpec = new RequestSpecBuilder().setBaseUri(ConfigReader.get("base.api.url")).setContentType(ContentType.URLENC).build();
+            requestSpec = new RequestSpecBuilder()
+                    .setBaseUri(ConfigReader.get("base.api.url"))
+                    .setContentType(ContentType.URLENC)
+                    .setAccept(ContentType.JSON)
+                    .build();
         }
         return requestSpec;
     }
