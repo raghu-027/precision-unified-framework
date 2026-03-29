@@ -1,15 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-
-<suite name="All Test Suite">
-
-    <test verbose="2" preserve-order="true"
-          name="ApiTestRunner">
-
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="API Test Suite" verbose="2" preserve-order="true">
+    <test name="TC1 - Get All Products List">
+        <parameter name="cucumber.features" value="src/test/resources/features/get_products.feature"/>
         <classes>
             <class name="com.precision.api.runner.ApiTestRunner"/>
         </classes>
-
     </test>
-
+    <test name="TC2 - Get Single Product Details">
+        <parameter name="cucumber.features" value="src/test/resources/features/search_product.feature"/>
+        <classes>
+            <class name="com.precision.api.runner.ApiTestRunner"/>
+        </classes>
+    </test>
+    <test name="TC3 - Create User Account">
+        <parameter name="cucumber.features" value="src/test/resources/features/create_user.feature"/>
+        <classes>
+            <class name="com.precision.api.runner.ApiTestRunner"/>
+        </classes>
+    </test>
+    <test name="TC4 - Update User Account">
+        <parameter name="cucumber.features" value="src/test/resources/features/update_user.feature"/>
+        <classes>
+            <class name="com.precision.api.runner.ApiTestRunner"/>
+        </classes>
+    </test>
+    <test name="TC5 - Delete User Account">
+        <parameter name="cucumber.features" value="src/test/resources/features/delete_user.feature"/>
+        <classes>
+            <class name="com.precision.api.runner.ApiTestRunner"/>
+        </classes>
+    </test>
+    <test name="TC6 - Negative Validation">
+        <parameter name="cucumber.features" value="src/test/resources/features/negative_validation.feature"/>
+        <classes>
+            <class name="com.precision.api.runner.ApiTestRunner"/>
+        </classes>
+    </test>
 </suite>

@@ -14,33 +14,24 @@ public class ApiHooks {
 
     @Before
     public void setUp(Scenario scenario) {
-
         ExtentTestManager.createTest(scenario.getName());
+        log.info(scenario.getName());
 
-        log.info("Starting Scenario: {}", scenario.getName());
-
-        ExtentTestManager.getTest()
-                .info("Starting Scenario: " + scenario.getName());
     }
 
     @After
     public void tearDown(Scenario scenario) {
-
         if (scenario.isFailed()) {
-            log.error("Scenario FAILED: {}", scenario.getName());
-
+            log.error("[FAILED] {}", scenario.getName());
             ExtentTestManager.getTest()
                     .fail("Scenario Failed: " + scenario.getName());
-
         } else {
-            log.info("Scenario PASSED: {}", scenario.getName());
-
+            log.info("PASSED TEST");
             ExtentTestManager.getTest()
                     .pass("Scenario Passed: " + scenario.getName());
         }
 
         ExtentTestManager.removeTest();
         ExtentReportManager.flushReports();
-        log.info("Report updated");
     }
 }

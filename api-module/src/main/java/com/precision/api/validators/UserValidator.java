@@ -16,33 +16,47 @@ public class UserValidator {
     }
 
     public static void validateUserCreated(Response response) {
-        log.info("Validating user creation response");
+        log.info("[VALIDATE] Create User Response");
         JsonPath jsonPath = parseResponse(response);
-        int responseCode = jsonPath.getInt("responseCode");
-        String message = jsonPath.getString("message");
+        int responseCode  = jsonPath.getInt("responseCode");
+        String message    = jsonPath.getString("message");
 
+        log.info("  [CHECK] RESPONSE CODE -> Expected: 201 | Actual: {}", responseCode);
         assert responseCode == 201 : "Expected 201 but got " + responseCode;
+
+        log.info("  [CHECK] MESSAGE       -> Expected: 'User created!' | Actual: '{}'", message);
         assert message.equals("User created!") : "Unexpected message: " + message;
-    }
 
-    public static void validateUserDeleted(Response response) {
-        log.info("Validating user deletion response");
-        JsonPath jsonPath = parseResponse(response);
-        int responseCode = jsonPath.getInt("responseCode");
-        String message = jsonPath.getString("message");
-
-        assert responseCode == 200 : "Expected 200 but got " + responseCode;
-        assert message.equals("Account deleted!") : "Unexpected message: " + message;
+        log.info("  [PASS]  All validations PASSED for Create User");
     }
 
     public static void validateUserUpdated(Response response) {
-        log.info("Validating user update response");
+        log.info("[VALIDATE] Update User Response");
         JsonPath jsonPath = parseResponse(response);
-        int responseCode = jsonPath.getInt("responseCode");
-        String message = jsonPath.getString("message");
+        int responseCode  = jsonPath.getInt("responseCode");
+        String message    = jsonPath.getString("message");
 
+        log.info("  [CHECK] RESPONSE CODE -> Expected: 200 | Actual: {}", responseCode);
         assert responseCode == 200 : "Expected 200 but got " + responseCode;
+
+        log.info("  [CHECK] MESSAGE       -> Expected: 'User updated!' | Actual: '{}'", message);
         assert message.equals("User updated!") : "Unexpected message: " + message;
+
+        log.info("  [PASS]  All validations PASSED for Update User");
     }
 
+    public static void validateUserDeleted(Response response) {
+        log.info("[VALIDATE] Delete User Response");
+        JsonPath jsonPath = parseResponse(response);
+        int responseCode  = jsonPath.getInt("responseCode");
+        String message    = jsonPath.getString("message");
+
+        log.info("  [CHECK] RESPONSE CODE -> Expected: 200 | Actual: {}", responseCode);
+        assert responseCode == 200 : "Expected 200 but got " + responseCode;
+
+        log.info("  [CHECK] MESSAGE       -> Expected: 'Account deleted!' | Actual: '{}'", message);
+        assert message.equals("Account deleted!") : "Unexpected message: " + message;
+
+        log.info("  [PASS]  All validations PASSED for Delete User");
+    }
 }
