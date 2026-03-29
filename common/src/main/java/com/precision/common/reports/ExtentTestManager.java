@@ -22,18 +22,21 @@ public class ExtentTestManager {
 
     public static void attachScreenshot(String filePath) {
         try {
-            extentTest.get().addScreenCaptureFromPath(filePath);
-        } catch (Exception e) {
-
-        }
+            if (extentTest.get() != null) {
+                extentTest.get().addScreenCaptureFromPath(filePath);
+            }
+        } catch (Exception ignored) {}
     }
 
     public static void attachScreenshotBase64(String base64) {
         try {
-            extentTest.get().fail(
-                    MediaEntityBuilder.createScreenCaptureFromBase64String(base64).build()
-            );
-        } catch (Exception e) {
-        }
+            if (extentTest.get() != null) {
+                extentTest.get().fail(
+                        MediaEntityBuilder
+                                .createScreenCaptureFromBase64String(base64)
+                                .build()
+                );
+            }
+        } catch (Exception ignored) {}
     }
 }
