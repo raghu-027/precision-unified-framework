@@ -3,16 +3,15 @@
 
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss} | %-5level | %logger{1} | %msg%n"/>
+            <PatternLayout charset="UTF-8" pattern="%msg%n"/>
         </Console>
 
         <File name="File" fileName="target/logs/automation.log" append="false">
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} | %-5level | %logger{1} | %msg%n"/>
+            <PatternLayout charset="UTF-8" pattern="%d{yyyy-MM-dd HH:mm:ss} | %-5level | %logger{1} | %msg%n"/>
         </File>
     </Appenders>
 
     <Loggers>
-        <!-- Only log YOUR classes at INFO, ignore noisy libraries -->
         <Logger name="com.precision" level="INFO" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="File"/>
