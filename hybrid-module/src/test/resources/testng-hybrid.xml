@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Hybrid Module Suite" parallel="false">
+    <test name="Hybrid Tests">
+        <classes>
+            <class name="com.precision.hybrid.runner.HybridTestRunner"/>
+        </classes>
+    </test>
+</suite>
