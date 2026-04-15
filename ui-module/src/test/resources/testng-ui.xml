@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="UI Test Suite" parallel="false" verbose="2">
+
+
+<suite name="UI Test Suite" parallel="tests" thread-count="3" verbose="2">
 
     <test name="TC1 - Register New User">
         <classes>
